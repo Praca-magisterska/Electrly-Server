@@ -42,6 +42,10 @@ model User {
   clientRefreshTokens   ClientRefreshToken[]
   clientAllowedScopes   ClientAllowedScope[]
   userRoles         UserRole[]
+  threads         Thread[]
+  threadReactions ThreadReaction[]
+  threadComments ThreadComment[]
+  threadCommentReactions ThreadCommentReaction[]
 }
 
 model UserEmailNotification {
@@ -364,4 +368,83 @@ model ScopePermission {
   scopeId       String
   permission    Permission @relation(fields: [permissionId], references: [id])
   permissionId  String
+}
+
+
+
+
+
+model Thread {
+  // system fields
+  id            String     @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt 
+  active        Boolean @default(true)
+  // custom fields
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String
+  title         String
+  content       String
+  threadCategory      ThreadCategory    @relation(fields: [threadCategoryId], references: [id])
+  threadCategoryId    String
+  // childs fields
+  threadReactions ThreadReaction[]
+  threadComments ThreadComment[]
+}
+
+model ThreadReaction {
+  // system fields
+  id            String     @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt 
+  active        Boolean @default(true)
+  // custom fields
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String
+  thread        Thread    @relation(fields: [threadId], references: [id])
+  threadId      String
+  positive      Boolean
+}
+
+model ThreadComment {
+  // system fields
+  id            String     @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt 
+  active        Boolean @default(true)
+  // custom fields
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String
+  thread        Thread    @relation(fields: [threadId], references: [id])
+  threadId      String
+  content       String
+  // childs fields
+  threadCommentReactions ThreadCommentReaction[]
+}
+
+model ThreadCommentReaction {
+  // system fields
+  id            String     @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt 
+  active        Boolean @default(true)
+  // custom fields
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String
+  threadComment       ThreadComment    @relation(fields: [threadCommentId], references: [id])
+  threadCommentId     String
+  positive      Boolean
+}
+
+model ThreadCategory {
+  // system fields
+  id            String     @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt 
+  active        Boolean @default(true)
+  // custom fields
+  name          String
+  imageUrl      String
+  // childs fields
+  threads Thread[]
 }
