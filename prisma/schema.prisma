@@ -28,6 +28,7 @@ model User {
   birthdate     DateTime?
   zoneInfo      String?
   locale        String?
+  imageUrl      String?
   // childs fields
   userEmailNotifications UserEmailNotification[]
   userPasswordCodes   UserPasswordCode[]
@@ -385,6 +386,7 @@ model Thread {
   userId        String
   title         String
   content       String
+  imageUrl      String?
   threadCategory      ThreadCategory    @relation(fields: [threadCategoryId], references: [id])
   threadCategoryId    String
   // childs fields
@@ -444,7 +446,7 @@ model ThreadCategory {
   active        Boolean @default(true)
   // custom fields
   name          String
-  imageUrl      String
+  imageUrl      String?
   // childs fields
   threads Thread[]
 }
