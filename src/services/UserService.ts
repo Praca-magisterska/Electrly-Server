@@ -48,7 +48,7 @@ export const findUser = async (req: Request, res: Response, next:NextFunction) =
             where: {
               id: req.body.middlewareData.userId,
             },
-          });
+        });
         if (!record) {
             throw new NotFoundError("User not found");
         }

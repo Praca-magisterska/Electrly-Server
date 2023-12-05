@@ -44,6 +44,17 @@ var scopePermissionController = require("../controllers/ScopePermissionControlle
 var scopeRouter = express_1.Router()
     .use("/scopes", scopeController)
     .use("/permissions", scopePermissionController);
+var threadController = require("../controllers/ThreadController");
+var threadReactionController = require("../controllers/ThreadReactionController");
+var threadCommentController = require("../controllers/ThreadCommentController");
+var threadCommentReactionController = require("../controllers/ThreadCommentReactionController");
+var threadCategoriesController = require("../controllers/ThreadCategoriesController");
+var threadRouter = express_1.Router()
+    .use("/threads", threadController)
+    .use("/reactions", threadReactionController)
+    .use("/comments", threadCommentController)
+    .use("/commentReactions", threadCommentReactionController)
+    .use("/categories", threadCategoriesController);
 var routes = express_1.Router()
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
@@ -54,6 +65,7 @@ var routes = express_1.Router()
     .use("/p", permissionRouter)
     .use("/r", roleRouter)
     .use("/s", scopeRouter)
+    .use("/t", threadRouter)
     .use(handleError)
     .use("*", handleNotFound);
 exports["default"] = routes;

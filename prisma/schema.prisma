@@ -445,7 +445,7 @@ model ThreadCategory {
   updatedAt     DateTime @updatedAt 
   active        Boolean @default(true)
   // custom fields
-  name          String
+  name          String @unique
   imageUrl      String?
   // childs fields
   threads Thread[]

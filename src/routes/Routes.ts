@@ -53,6 +53,18 @@ const scopeRouter = Router()
     .use("/scopes", scopeController)
     .use("/permissions", scopePermissionController);
 
+const threadController = require("../controllers/ThreadController");
+const threadReactionController = require("../controllers/ThreadReactionController");
+const threadCommentController = require("../controllers/ThreadCommentController");
+const threadCommentReactionController = require("../controllers/ThreadCommentReactionController");
+const threadCategoriesController = require("../controllers/ThreadCategoriesController");
+const threadRouter = Router()
+    .use("/threads", threadController)
+    .use("/reactions", threadReactionController)
+    .use("/comments", threadCommentController)
+    .use("/commentReactions", threadCommentReactionController)
+    .use("/categories", threadCategoriesController);
+
 
 const routes = Router()
     .use(bodyParser.json())
@@ -64,6 +76,7 @@ const routes = Router()
     .use("/p", permissionRouter)
     .use("/r", roleRouter)
     .use("/s", scopeRouter)
+    .use("/t", threadRouter)
     .use(handleError)
     .use("*", handleNotFound);
   
